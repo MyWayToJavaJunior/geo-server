@@ -12,5 +12,12 @@
 
     <artifactId>generator</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.sherman.geo.server</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

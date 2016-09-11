@@ -32,8 +32,6 @@ import static java.util.Optional.ofNullable;
 public class GeoStorageImpl implements GeoStorage {
     private static final Logger log = LoggerFactory.getLogger(GeoStorageImpl.class);
 
-    private static final int MAX_LENGTH = 6; // ≤ 1.22km × 0.61km
-
     private final ConcurrentMap<Long, IndexedUserLabel> userLabels = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, AtomicInteger> geoHashIndexSize = new ConcurrentHashMap<>();
 

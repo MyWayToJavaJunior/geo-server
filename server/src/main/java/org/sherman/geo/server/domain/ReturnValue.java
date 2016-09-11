@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 
+import java.lang.*;
+
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**

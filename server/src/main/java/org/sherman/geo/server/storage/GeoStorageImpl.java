@@ -45,8 +45,8 @@ public class GeoStorageImpl implements GeoStorage {
         FileInputStream logStream = new FileInputStream(file);
         InputStreamReader reader = new InputStreamReader(logStream);
 
-        int written = CharStreams.readLines(reader, new UserLabelLineProcessor());
-        log.info("Elts {}", written);
+        int read = CharStreams.readLines(reader, new UserLabelLineProcessor());
+        log.info("Elts {}", read);
 
         reader.close();
         logStream.close();
@@ -104,5 +104,4 @@ public class GeoStorageImpl implements GeoStorage {
             return lines;
         }
     }
-
 }

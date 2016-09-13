@@ -30,7 +30,7 @@ public class IntegrationTests extends AbstractTestNGSpringContextTests {
     public void getSizeByHash() throws InterruptedException, ExecutionException {
         Response response = httpClient.prepareGet("http://localhost:8080/api/geo/hash/size?lat=55.800134&lon=37.571392").execute().get();
 
-        assertEquals(response.getResponseBody(), "{\"result\":1722}");
+        assertEquals(response.getResponseBody(), "{\"result\":1724}");
     }
 
     @BeforeTest

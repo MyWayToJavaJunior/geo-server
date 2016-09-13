@@ -9,8 +9,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GeoServiceImpl implements GeoService {
-
-    public void test() {
-        GeoHash.encodeHash(55.7415168d,37.6283451d);
-    }
 }

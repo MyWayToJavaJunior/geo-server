@@ -29,6 +29,6 @@ public class GeoStorageTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void size() throws IOException, InterruptedException {
-        assertEquals(geoStorage.getSizeByGeoHash("ucftpk"), 1784);
+        assertEquals(geoStorage.getSizeByGeoHash("ucftpk"), 1778);
     }
 }

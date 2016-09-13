@@ -40,6 +40,6 @@ public class GeoControllerImpl implements GeoController {
 
         String hash = GeoHash.encodeHash(request.getLat(), request.getLon(), GeoStorage.MAX_LENGTH);
 
-        return new ReturnValue<Integer>(geoStorage.getSizeByGeoHash(hash));
+        return new ReturnValue<>(geoStorage.getSizeByGeoHash(hash));
     }
 }

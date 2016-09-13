@@ -1,6 +1,6 @@
 package org.sherman.geo.server.controller;
 
-import org.sherman.geo.server.controller.request.SizeRequest;
+import org.sherman.geo.server.controller.request.CoordsRequest;
 import org.sherman.geo.server.domain.ReturnValue;
 
 /**
@@ -8,7 +8,7 @@ import org.sherman.geo.server.domain.ReturnValue;
  * @since 11.09.16
  */
 public interface GeoController {
-    ReturnValue<Boolean> isUserNearPlace(Long userId);
+    ReturnValue<Boolean> isUserNearLabel(Long userId, CoordsRequest request);
 
-    ReturnValue<Integer> getSizeByCoords(SizeRequest request);
+    ReturnValue<Integer> getSizeByCoords(CoordsRequest request);
 }

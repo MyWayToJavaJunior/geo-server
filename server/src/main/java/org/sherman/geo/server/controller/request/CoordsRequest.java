@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Denis Gabaydulin
  * @since 11.09.16
  */
-public class SizeRequest {
+public class CoordsRequest {
     private Double lat;
     private Double lon;
 

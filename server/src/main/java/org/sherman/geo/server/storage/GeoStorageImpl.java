@@ -66,9 +66,7 @@ public class GeoStorageImpl implements GeoStorage {
 
     @Override
     public Optional<IndexedUserLabel> getByUser(long userId) {
-        return ofNullable(of(userLabels.get(userId))
-                .orElse(null)
-        );
+        return ofNullable(userLabels.get(userId));
     }
 
     @Override

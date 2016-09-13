@@ -1,7 +1,7 @@
 package org.sherman.geo.server.storage;
 
-import com.github.davidmoten.geo.LatLong;
 import org.jetbrains.annotations.NotNull;
+import org.sherman.geo.common.domain.IndexedUserLabel;
 
 import java.util.Optional;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface GeoStorage {
     int MAX_LENGTH = 6; // ≤ 1.22km × 0.61km
 
-    Optional<LatLong> getByUser(long userId);
+    Optional<IndexedUserLabel> getByUser(long userId);
 
     Optional<Integer> getDistanceError(@NotNull String geoHash);
 

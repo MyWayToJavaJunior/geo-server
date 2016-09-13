@@ -65,9 +65,8 @@ public class GeoStorageImpl implements GeoStorage {
     }
 
     @Override
-    public Optional<LatLong> getByUser(long userId) {
+    public Optional<IndexedUserLabel> getByUser(long userId) {
         return ofNullable(of(userLabels.get(userId))
-                .map(label -> label.getLabel().getCoords())
                 .orElse(null)
         );
     }

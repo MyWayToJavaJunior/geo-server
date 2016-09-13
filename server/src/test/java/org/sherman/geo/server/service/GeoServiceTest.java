@@ -4,6 +4,8 @@ import com.github.davidmoten.geo.LatLong;
 import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.kubek2k.springockito.annotations.SpringockitoAnnotatedContextLoader;
 import org.mockito.Mockito;
+import org.sherman.geo.common.domain.IndexedUserLabel;
+import org.sherman.geo.common.domain.UserLabel;
 import org.sherman.geo.server.storage.GeoStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +51,29 @@ public class GeoServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void nearby() {
-        when(geoStorage.getByUser(eq(42L))).thenReturn(Optional.of(new LatLong(42d, 42d)));
+        when(geoStorage.getByUser(eq(42L))).thenReturn(Optional.of(create(42L, new LatLong(42d, 42d))));
+        when(geoStorage.getDistanceError(eq("szmygt"))).thenReturn(Optional.of(100));
 
         assertTrue(geoService.isUserNearLabel(42L, new LatLong(42d, 42d)));
+    }
+
+    @Test
+    public void farAway() {
+        when(geoStorage.getByUser(eq(42L))).thenReturn(Optional.of(create(42L, new LatLong(42d, 42d))));
+        when(geoStorage.getDistanceError(eq("szmygt"))).thenReturn(Optional.of(82500));
+
+        assertFalse(geoService.isUserNearLabel(42L, new LatLong(42d, 41d)));
     }
 
     @BeforeMethod
     private void reset() {
         Mockito.reset(geoStorage);
+    }
+
+    private static IndexedUserLabel create(long userId, LatLong coords) {
+        return new IndexedUserLabel(
+                new UserLabel(userId, coords),
+                GeoStorage.MAX_LENGTH
+        );
     }
 }

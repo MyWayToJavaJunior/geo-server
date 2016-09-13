@@ -18,10 +18,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 
 /**
@@ -48,6 +50,14 @@ public class GeoStorageImpl implements GeoStorage {
 
         reader.close();
         logStream.close();
+    }
+
+    @Override
+    public Optional<LatLong> getByUser(long userId) {
+        return ofNullable(of(userLabels.get(userId))
+                .map(label -> label.getLabel().getCoords())
+                .orElse(null)
+        );
     }
 
     @Override
@@ -79,7 +89,7 @@ public class GeoStorageImpl implements GeoStorage {
                 userLabels.put(userLabel.getUserId(), indexedUserLabel);
 
                 Maps.atomicPut(geoHashIndexSize, indexedUserLabel.getHash(), new AtomicInteger())
-                    .incrementAndGet();
+                        .incrementAndGet();
 
                 lines++;
             } catch (Exception e) {

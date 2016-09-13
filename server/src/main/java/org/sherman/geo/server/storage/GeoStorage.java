@@ -1,6 +1,9 @@
 package org.sherman.geo.server.storage;
 
+import com.github.davidmoten.geo.LatLong;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * @author Denis Gabaydulin
@@ -8,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface GeoStorage {
     int MAX_LENGTH = 6; // ≤ 1.22km × 0.61km
+
+    Optional<LatLong> getByUser(long userId);
 
     int getSize();
 

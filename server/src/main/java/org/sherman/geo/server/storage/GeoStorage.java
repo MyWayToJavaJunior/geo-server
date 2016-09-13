@@ -14,6 +14,8 @@ public interface GeoStorage {
 
     Optional<LatLong> getByUser(long userId);
 
+    Optional<Integer> getDistanceError(@NotNull String geoHash);
+
     int getSize();
 
     int getSizeByGeoHash(@NotNull String geoHash);

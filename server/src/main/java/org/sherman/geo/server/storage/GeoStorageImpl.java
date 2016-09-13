@@ -36,16 +36,28 @@ public class GeoStorageImpl implements GeoStorage {
 
     private final ConcurrentMap<Long, IndexedUserLabel> userLabels = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, AtomicInteger> geoHashIndexSize = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Integer> distanceErrors = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void load() throws IOException {
         // FIXME
-        File file = new File("/home/sherman/user_data");
+        File userData = new File("/home/sherman/user_data");
 
-        FileInputStream logStream = new FileInputStream(file);
+        FileInputStream logStream = new FileInputStream(userData);
         InputStreamReader reader = new InputStreamReader(logStream);
 
         int read = CharStreams.readLines(reader, new UserLabelLineProcessor());
+        log.info("Elts {}", read);
+
+        reader.close();
+        logStream.close();
+
+        File distanceErrorData = new File("/home/sherman/distance_error");
+
+        logStream = new FileInputStream(distanceErrorData);
+        reader = new InputStreamReader(logStream);
+
+        read = CharStreams.readLines(reader, new DistanceErrorLineProcessor());
         log.info("Elts {}", read);
 
         reader.close();
@@ -58,6 +70,11 @@ public class GeoStorageImpl implements GeoStorage {
                 .map(label -> label.getLabel().getCoords())
                 .orElse(null)
         );
+    }
+
+    @Override
+    public Optional<Integer> getDistanceError(@NotNull String geoHash) {
+        return ofNullable(distanceErrors.get(geoHash));
     }
 
     @Override
@@ -90,6 +107,30 @@ public class GeoStorageImpl implements GeoStorage {
 
                 Maps.atomicPut(geoHashIndexSize, indexedUserLabel.getHash(), new AtomicInteger())
                         .incrementAndGet();
+
+                lines++;
+            } catch (Exception e) {
+                log.info("Can't parse line {}", line, e);
+            }
+
+            return true;
+        }
+
+        @Override
+        public Integer getResult() {
+            return lines;
+        }
+    }
+
+    private class DistanceErrorLineProcessor implements LineProcessor<Integer> {
+        private int lines;
+
+        @Override
+        public boolean processLine(String line) throws IOException {
+            try {
+                List<String> distanceError = Splitter.on(',').splitToList(line);
+
+                distanceErrors.put(distanceError.get(0), Integer.parseInt(distanceError.get(1)));
 
                 lines++;
             } catch (Exception e) {

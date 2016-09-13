@@ -28,7 +28,12 @@ public class GeoStorageTest extends AbstractTestNGSpringContextTests {
     private GeoStorage geoStorage;
 
     @Test
-    public void size() throws IOException, InterruptedException {
+    public void getSizeByGeoHash() throws IOException, InterruptedException {
         assertEquals(geoStorage.getSizeByGeoHash("ucftpk"), 1778);
+    }
+
+    @Test
+    public void getDistanceError() {
+        assertEquals(geoStorage.getDistanceError("ucftpk").get(), Integer.valueOf(327));
     }
 }

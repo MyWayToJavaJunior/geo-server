@@ -45,8 +45,17 @@ Finally it has two files user_data and distance_error in csv format.
 I chose a [geohash](https://en.wikipedia.org/wiki/Geohash) for a representation of a cell index in the "grid" table because of two reasons:
 * It's deadly simple (compared to r-tree, for example).
 * It ideally fit into the task requirements (get a number of users in the cell).
+ 
+### Complexity
 
-### Basic platform: spring boot (easy REST API, configuration, DI).
+I chose a scalable and concurrent version of a hash map data structure.
+A complexity of both methods is constant in the best case.
+
+### Basic platform, frameworks.
+* Spring boot (easy REST API, configuration, DI)
+* Jetty server
+* Guava
+* Testng/mockito/springockito
 
 ### API (json format)
 

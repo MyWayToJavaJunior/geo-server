@@ -24,7 +24,7 @@ import static org.testng.AssertJUnit.assertEquals;
                 ServerConfiguration.class,
                 GeoStorageImpl.class
         })
-@TestPropertySource(locations="classpath:application.properties")
+@TestPropertySource(locations = "classpath:application.properties")
 public class GeoStorageTest extends AbstractTestNGSpringContextTests {
     private static final Logger log = LoggerFactory.getLogger(GeoStorageTest.class);
 

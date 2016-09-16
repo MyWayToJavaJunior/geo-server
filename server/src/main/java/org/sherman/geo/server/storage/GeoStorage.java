@@ -3,6 +3,7 @@ package org.sherman.geo.server.storage;
 import org.jetbrains.annotations.NotNull;
 import org.sherman.geo.common.domain.IndexedUserLabel;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -19,4 +20,7 @@ public interface GeoStorage {
     int getSize();
 
     int getSizeByGeoHash(@NotNull String geoHash);
+
+    @NotNull
+    Map<String, Integer> getDistribution();
 }

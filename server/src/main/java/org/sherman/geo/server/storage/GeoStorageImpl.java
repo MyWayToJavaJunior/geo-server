@@ -2,11 +2,13 @@ package org.sherman.geo.server.storage;
 
 import com.github.davidmoten.geo.LatLong;
 import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.io.CharStreams;
 import com.google.common.io.LineProcessor;
 import org.jetbrains.annotations.NotNull;
 import org.sherman.geo.common.domain.IndexedUserLabel;
 import org.sherman.geo.common.domain.UserLabel;
+import org.sherman.geo.common.util.GuavaCollectors;
 import org.sherman.geo.common.util.Maps;
 import org.sherman.geo.server.configuration.ServerConfiguration;
 import org.slf4j.Logger;
@@ -19,13 +21,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
+import static org.sherman.geo.common.util.GuavaCollectors.toImmutableMap;
 
 /**
  * @author Denis Gabaydulin
@@ -68,6 +74,15 @@ public class GeoStorageImpl implements GeoStorage {
         return ofNullable(geoHashIndexSize.get(geoHash))
                 .map(AtomicInteger::get)
                 .orElse(0);
+    }
+
+    @NotNull
+    @Override
+    public Map<String, Integer> getDistribution() {
+        return geoHashIndexSize.entrySet()
+                .stream()
+                .map(e -> new AbstractMap.SimpleImmutableEntry<>(e.getKey(), e.getValue().get()))
+                .collect(toImmutableMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private void loadData(String fileName, LineProcessor<Integer> processor) throws IOException {

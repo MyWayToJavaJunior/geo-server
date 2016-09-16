@@ -51,7 +51,7 @@ public class GeneratorsTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private Generators generators;
 
-    @Test
+    @Test(enabled = false)
     public void generateMoscow() throws IOException {
         int maxEltsPerHash = 50000;
 
@@ -100,7 +100,7 @@ public class GeneratorsTest extends AbstractTestNGSpringContextTests {
         writer.close();
     }
 
-    @Test
+    @Test(enabled = false)
     public void generateDistanceError() throws IOException {
         File userData = new File("/home/sherman/user_data");
 

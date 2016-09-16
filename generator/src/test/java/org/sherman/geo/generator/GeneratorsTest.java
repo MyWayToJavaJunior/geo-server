@@ -10,10 +10,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.CharStreams;
 import com.google.common.io.LineProcessor;
-import org.sherman.geo.common.domain.IndexedUserLabel;
 import org.sherman.geo.common.domain.UserLabel;
-import org.sherman.geo.common.util.GuavaCollectors;
-import org.sherman.geo.common.util.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +23,8 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.sherman.geo.common.util.GuavaCollectors.toImmutableList;
 
 /**
  * @author Denis Gabaydulin
@@ -107,7 +100,7 @@ public class GeneratorsTest extends AbstractTestNGSpringContextTests {
         FileInputStream logStream = new FileInputStream(userData);
         InputStreamReader reader = new InputStreamReader(logStream);
 
-        UserLabelLineProcessor processor = new UserLabelLineProcessor();
+        DistanceErrorLineProcessor processor = new DistanceErrorLineProcessor();
 
         CharStreams.readLines(reader, processor);
 
@@ -160,7 +153,7 @@ public class GeneratorsTest extends AbstractTestNGSpringContextTests {
         }
     }
 
-    private class UserLabelLineProcessor implements LineProcessor<Integer> {
+    private class DistanceErrorLineProcessor implements LineProcessor<Integer> {
         private int lines;
         private final ConcurrentMap<String, Integer> hashesToErrors = new ConcurrentHashMap<>();
         private final Random random = new Random();

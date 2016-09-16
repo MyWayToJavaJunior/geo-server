@@ -8,8 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import org.sherman.geo.common.domain.IndexedUserLabel;
 import org.sherman.geo.common.domain.UserLabel;
 import org.sherman.geo.common.util.Maps;
+import org.sherman.geo.server.configuration.ServerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +25,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 
 /**
@@ -34,34 +35,17 @@ import static java.util.Optional.ofNullable;
 public class GeoStorageImpl implements GeoStorage {
     private static final Logger log = LoggerFactory.getLogger(GeoStorageImpl.class);
 
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     private final ConcurrentMap<Long, IndexedUserLabel> userLabels = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, AtomicInteger> geoHashIndexSize = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, Integer> distanceErrors = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void load() throws IOException {
-        // FIXME
-        File userData = new File("/home/sherman/user_data");
-
-        FileInputStream logStream = new FileInputStream(userData);
-        InputStreamReader reader = new InputStreamReader(logStream);
-
-        int read = CharStreams.readLines(reader, new UserLabelLineProcessor());
-        log.info("Elts {}", read);
-
-        reader.close();
-        logStream.close();
-
-        File distanceErrorData = new File("/home/sherman/distance_error");
-
-        logStream = new FileInputStream(distanceErrorData);
-        reader = new InputStreamReader(logStream);
-
-        read = CharStreams.readLines(reader, new DistanceErrorLineProcessor());
-        log.info("Elts {}", read);
-
-        reader.close();
-        logStream.close();
+        loadData(serverConfiguration.getUserDataFileName(), new UserLabelLineProcessor());
+        loadData(serverConfiguration.getDistanceErrorDataFileName(), new DistanceErrorLineProcessor());
     }
 
     @Override
@@ -84,6 +68,20 @@ public class GeoStorageImpl implements GeoStorage {
         return ofNullable(geoHashIndexSize.get(geoHash))
                 .map(AtomicInteger::get)
                 .orElse(0);
+    }
+
+    private void loadData(String fileName, LineProcessor<Integer> processor) throws IOException {
+        File data = new File(fileName);
+
+        FileInputStream logStream = new FileInputStream(data);
+        InputStreamReader reader = new InputStreamReader(logStream);
+
+        int read = CharStreams.readLines(reader, processor);
+
+        log.info("Elts {}", read);
+
+        reader.close();
+        logStream.close();
     }
 
     private class UserLabelLineProcessor implements LineProcessor<Integer> {

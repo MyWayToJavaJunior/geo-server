@@ -12,7 +12,7 @@ is less than an error, the user is nearby, otherwise is not.
 
 * Method to get a count of labels in a given area (labels are distributed in bound areas).
 
-* -Method to change the coordinates (lat, lon) of a user label.-
+* ~~Method to change the coordinates (lat, lon) of a user label.~~
 
 ## Generate data.
 

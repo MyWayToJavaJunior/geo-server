@@ -39,7 +39,7 @@ At first, a user data was generated randomly selecting a point in a radius of 10
 Then, a "grid" table was generated based on user data table transforming a lat,lon of a user label to a pair of values {geohash, a randomly select error from 0 to 500}.
 
 A distribution of the generated data is close to uniform for a 90% of data:
-[!distribution](https://github.com/sherman/geo-server/blob/master/data/distribution_90.png)
+[[(https://github.com/sherman/geo-server/blob/master/data/distribution_90.png]]
 
 Finally it has two files user_data and distance_error in csv format.
 

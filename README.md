@@ -32,6 +32,11 @@ error*       | lat    | lon
 
 error* - distance error
 
+## Requirements
+
+* java8
+* maven3
+
 ## Build
 
 Build with tests (you must fix the path to data files, before running the command):

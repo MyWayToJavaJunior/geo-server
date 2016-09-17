@@ -83,12 +83,12 @@ A complexity of both methods is constant in the best case.
 
 * Check a user coords: GET http://localhost:8080/api/geo/users/356865068291330092/near?lat=55.804&lon=37.637
 ```
-{result: true}
+{"result": true}
 ```
 
 * Get segment size: GET http://localhost:8080/api/geo/hash/size/?lat=55.805&lon=37.638
 ```
-{result: 1691}
+{"result": 1691}
 ```
 
 ### Known issues.

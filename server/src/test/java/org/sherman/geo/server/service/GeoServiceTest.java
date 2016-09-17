@@ -1,6 +1,8 @@
 package org.sherman.geo.server.service;
 
+import com.github.davidmoten.geo.GeoHash;
 import com.github.davidmoten.geo.LatLong;
+import com.github.davidmoten.grumpy.core.Position;
 import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.kubek2k.springockito.annotations.SpringockitoAnnotatedContextLoader;
 import org.mockito.Mockito;
@@ -63,6 +65,15 @@ public class GeoServiceTest extends AbstractTestNGSpringContextTests {
         when(geoStorage.getDistanceError(eq("szmygt"))).thenReturn(Optional.of(82500));
 
         assertFalse(geoService.isUserNearLabel(42L, new LatLong(42d, 41d)));
+    }
+
+    @Test
+    public void checkDistanceError() {
+        when(geoStorage.getByUser(eq(356865068291330092L))).thenReturn(Optional.of(create(356865068291330092L, new LatLong(55.804, 37.637))));
+        when(geoStorage.getDistanceError(eq("ucfv2q"))).thenReturn(Optional.of(247));
+
+        assertTrue(geoService.isUserNearLabel(356865068291330092L, new LatLong(55.804, 37.637)));
+        assertFalse(geoService.isUserNearLabel(356865068291330092L, new LatLong(55.806, 37.639))); // ~ 255 meters
     }
 
     @BeforeMethod

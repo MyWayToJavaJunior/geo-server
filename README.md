@@ -93,8 +93,8 @@ A complexity of both methods is constant in the best case.
 
 ### Known issues.
 
-* Spring boot maven plugin doesn't correctly build multi module maven project (classes from another modules are not reachable).
-Workaround: switch to single-module maven project.
+* Spring boot maven plugin doesn't correctly build a multi-module maven project (classes from another modules are not reachable).
+Workaround: switch to a single-module maven project.
 
 * A method for changing the data is not implemented (lack of time).
 
